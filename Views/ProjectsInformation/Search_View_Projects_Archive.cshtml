@@ -1,0 +1,126 @@
+﻿@using Document_Manager_Project.Models
+@using Microsoft.AspNetCore.Http
+@model Document_Manager_Project.Models.Project_Details_Table
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+    ViewBag.Research_ID = ViewBag.researcher_id;
+    int id = ViewBag.researcher_id;
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+      
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+        width: auto;
+        color: white;
+       
+    }
+
+    tr:nth-child(odd) {
+        background-color: #4d4d4d;
+        color: white;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #2d2d2d;
+        color: white;
+    }
+
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left:auto;
+        position: relative;
+    }
+
+    .custom-input {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+<h2 class="custom-centering text-info">
+    Projects
+</h2>
+
+            <div>
+                <br/>
+                <table class="centre" font-family="arial, sans-serif" width="90%" style="margin-right:auto" border="1">
+                    <tr>
+                        <th>
+                            Project Name
+                        </th>
+                        <th>
+                            Project Short Name
+                        </th>
+                        <th>
+                            PI First Name
+                        </th>
+                        <th>
+                            PI Last Name
+                        </th>
+                        <th>
+                            Sponsor
+                        </th>
+                        <th>
+                            Proposal Status
+                        </th>
+                    </tr>
+                    @foreach (var item in ViewBag.Project_other)
+                    {
+                        <tr>
+                            <td>
+                                @item.ProjectName
+                            </td>
+                            <td>
+                                @item.ProjectShortName
+                            </td>
+                            <td>
+                                @item.PIFirstName
+
+                            </td>
+                            <td>
+                                @item.PILastName
+                            </td>
+                            <td>
+                                @item.Sponsor
+                            </td>
+                            <td>
+                                @item.ProjectStatus
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+
+<a href="javascript:history.go(-1)" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

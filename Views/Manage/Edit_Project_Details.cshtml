@@ -1,0 +1,274 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Document_Manager_Project.Models.Project_Details_Table
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        margin-top: 70px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+        color: white;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #3d3d3d;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #141414;
+    }
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 20%;
+        position: relative;
+    }
+
+    .text-info {
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 80%;
+        max-width: 80%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-label {
+        color: white
+    }
+
+    .custom-input {
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+
+@{
+    var Full_Name = @Accessor.HttpContext.Session.GetString("FullName");
+    TempData["ProjectID"] = ViewBag.Project_ID;
+    // {
+   // TempData["CollabDetails"] = ViewBag.Full_project;
+   // }
+}
+
+
+@{
+    List<SelectListItem> Status = new List<SelectListItem>();
+    if (@ViewBag.Full_project.Status.Contains("Current"))
+    {
+        Status.Add(new SelectListItem
+                {
+                    Text = "Current",
+                    Value = "Current",
+                    Selected = false
+                });
+
+        Status.Add(new SelectListItem
+                {
+                    Text = "Closed",
+                    Value = "Closed",
+                    Selected = false
+                });
+
+   }
+    else if (@ViewBag.Full_project.Status.Contains("Pending"))
+    {
+        Status.Add(new SelectListItem
+                {
+                    Text = "Pending",
+                    Value = "Pending",
+                    Selected = false
+                });
+        Status.Add(new SelectListItem
+                {
+                    Text = "Current",
+                    Value = "Current",
+                    Selected = false
+                });
+        Status.Add(new SelectListItem
+                {
+                    Text = "Not Funded",
+                    Value = "Not Funded",
+                    Selected = false
+                });
+   }
+}
+
+
+<div class="row justify-content-md-center">
+        @using (Html.BeginForm("Edit_Details", "Manage", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+
+            
+            <table class="center" font-family="arial, sans-serif" width="80%" style="margin-right:auto" border="1">
+                <tr>
+                    <td>
+                        PI First Name : @ViewBag.Full_project.FirstName
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        PI Last Name: @ViewBag.Full_project.LastName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    Project Name: @Html.TextBoxFor(m => m.ProjectName, new {@class = "custom-input", @placeholder = @ViewBag.Full_project.ProjectName })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       Project Short Name: @Html.TextBoxFor(m => m.ProjectShortName, new {@class = "custom-input", @placeholder = @ViewBag.Full_project.projectShortName })
+                       
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td>
+                   Sponsor: @Html.TextBoxFor(m => m.Sponsor, new {@class = "custom-input", @placeholder = @ViewBag.Full_project.Sponsor })
+
+                    </td>
+                </tr>
+
+                 <tr>
+                    <td>
+                     PI Effort: @Html.TextBox("Effort", "", new {@class = "custom-input", @placeholder = @ViewBag.Full_project.Effort })
+
+                    </td>
+                </tr>
+
+            @if (@ViewBag.Full_project.Status.Contains("Current"))
+            {
+                <tr>
+                    <td>
+                    Project Status: @Html.DropDownListFor(m=>m.ProjectStatus, Status ,new { @class = "custom-input", @placeholder = @ViewBag.Full_project.Status })
+                    </td>
+                </tr>
+                 <tr>
+                        <td>
+                      
+                        KFS Account: @Html.TextBoxFor(m => m.KFS_Account, new { @class = "custom-input", @placeholder = @ViewBag.Full_project.KFS_Account, id = "KFS" })
+                        </td>
+                  </tr>
+                }
+            @if(@ViewBag.Full_project.Status.Contains("Pending")){
+                <tr>
+                    <td>
+                        Project Status: @Html.DropDownListFor(m=>m.ProjectStatus, Status ,new { @class = "custom-input", @placeholder = @ViewBag.Full_project.Status, id = "proj_status" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        KFS Accunt: @Html.TextBoxFor(m => m.KFS_Account, new { @class = "custom-input", @placeholder = @ViewBag.Full_project.KFS_Account, id = "KFS" })
+                    </td>
+                </tr>
+            }
+          
+                <tr>
+                    <td>
+                    Funds: @Html.TextBoxFor(m => m.Funds, new {@class = "custom-input", @placeholder =@ViewBag.Full_project.Funds })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Project Start Date: @ViewBag.Full_project.Start_date.ToString("MM/dd/yyyy")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Project End Date: @ViewBag.Full_project.End_Date.ToString("MM/dd/yyyy")
+                    </td>
+                </tr>
+            <tr>
+                <td>
+                    Place of Performance: @Html.TextBoxFor(m => m.PlaceOfPerformance, new {@class = "custom-input", @placeholder =@ViewBag.Full_project.PlaceofPerformance })
+                </td>
+            </tr>
+            </table>
+
+        <div class="form-group">
+            <input type="submit" name="Save" class="btn btn-warning" value="Finish" asp-controller="Manage" asp-action="Edit_Details" />
+         </div>
+        <div class="form-group">
+            <input type="submit" name="Next" class="btn btn-warning" value="Edit Collaborators" asp-controller="Manage" asp-action="Edit_Details" asp-route-id="5" />
+        </div>
+        }
+</div>
+
+
+
+
+
+
+
+@section scripts{
+     <script type="text/javascript">
+                          $(function () {
+                              $('#proj_status').change(function () {
+                                  var value = $(this).val();
+                                  if (value == 'Current') {
+                                        $('#KFS').show();
+                                  } else {
+                                        $('#KFS').hide();
+                                  }
+                              });
+                          });</script>
+}
+
+
+<a href="javascript:history.go(-1)" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

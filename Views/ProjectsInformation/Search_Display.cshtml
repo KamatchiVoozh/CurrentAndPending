@@ -1,0 +1,134 @@
+﻿@model Document_Manager_Project.Models.Search_Details
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<style>
+    .main {
+        height: 125vh;
+        background: #141414;
+        width: 100%;
+        padding-left: 35px;
+        display: flex;
+    }
+
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 35%;
+        position: relative;
+    }
+
+    .text-info {
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 80%;
+        max-width: 30%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-input {
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+<div class="card-body">
+    @if (@Accessor.HttpContext.Session.GetString("FirstName") != null)
+
+    {
+        <p>Name:  @Accessor.HttpContext.Session.GetString("FirstName") </p>
+        
+    }
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Search
+            </div>
+            <div class="card-body">
+                @foreach (var item in ViewBag.Full_project)
+                {
+                    <tr>
+                        <td>
+                            @item.ProjectName
+                        </td>
+                        <td>
+                            @item.ProjectShortName
+                        </td>
+                        <td>
+                            @item.PIFirstName
+
+                        </td>
+                        <td>
+                            @item.PILastName
+                        </td>
+                        <td>
+                            @item.Sponsor
+                        </td>
+                        <td>
+                            @item.ProjectStatus
+                        </td>
+                        <td>
+                            <div class="ViewProjects">
+
+                                <form enctype="multipart/form-data" method="get" asp-controller="Manage" asp-action="ViewProjects" runat="server" asp-route-id="@item.ProjectId">
+                                    <dl>
+                                        <input class="btn btn-dark" type="submit" value="View Projects" runat="server" />
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="EditProjects">
+
+                                <form enctype="multipart/form-data" method="get" asp-controller="Manage" asp-action="EditProjects" runat="server" asp-route-id="@item.ProjectId">
+                                    <dl>
+                                        <input class="btn btn-dark" type="submit" value="Edit Projects" runat="server" />
+                                </form>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="@Url.Action("Back","Account")" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

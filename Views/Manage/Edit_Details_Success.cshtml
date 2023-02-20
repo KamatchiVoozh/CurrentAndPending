@@ -1,0 +1,111 @@
+﻿@model Document_Manager_Project.Models.User_Details
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<style>
+    table {
+        margin-top: 70px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+        color: white;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #3d3d3d;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #141414;
+    }
+
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 20%;
+        position: relative;
+    }
+
+    .text-info {
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 80%;
+        max-width: 80%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-label {
+        color: white
+    }
+
+    .custom-input {
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+<div class="text-info">
+<p>
+    We focus on Research Projects
+</p>
+<ul>
+    <li>On place to store all our proposals </li>
+    <li>
+        It's all about your Projects
+    </li>
+    <li>
+        We listen to you. When you call us we'll answer and take the time that we need with
+        you.
+    </li>
+    <li>
+        We're real. 
+    </li>
+
+    <p>Edited Sucessfully</p>
+</ul>
+</div>
+<a href="@Url.Action("Back","Account")" class="btn btn-warning">Back</a>
+<br/>
+<div>@ViewBag.Message</div>

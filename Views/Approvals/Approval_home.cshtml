@@ -1,0 +1,95 @@
+﻿@model Document_Manager_Project.Models.Over_Lap
+@using Document_Manager_Project.Models
+
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+
+<style>
+
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 9%;
+        position: relative;
+    }
+
+    .text-info {
+        text-align: center;
+        margin-top: 70px;
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 90%;
+        max-width: 60%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 50px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-input {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 custom-centering">
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <p>Approval Requests</p>
+                    <form enctype="multipart/form-data" method="get" asp-controller="Approvals" asp-action="Approve" runat="server">
+                        <input class="btn btn-warning" type="submit" value="Approvals" runat="server" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 custom-centering">
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <p>Remove Access</p>
+                    <form enctype="multipart/form-data" method="get" asp-controller="Approvals" asp-action="Remove" runat="server">
+                        <input class="btn btn-warning" type="submit" value="Remove Access" runat="server" />
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<a href="javascript:history.go(-1)" class="btn btn-warning">Back</a>
+<div>@ViewBag.Message</div>
+<br />

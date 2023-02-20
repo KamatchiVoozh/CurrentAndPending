@@ -1,0 +1,136 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Document_Manager_Project.Models.Project_Details
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<h2>
+    Welcome to the Geographical Sciences Department
+</h2>
+
+<p>
+    We focus on Research Projects
+</p>
+<ul>
+    <li>On place to store all our proposals </li>
+    <li>
+        It's all about your Projects
+    </li>
+    <li>
+        We listen to you. When you call us we'll answer and take the time that we need with
+        you.
+    </li>
+    <li>
+        We're real.
+    </li>
+</ul>
+
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        @using (Html.BeginForm("UpdateDetails", "Manage", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                        <tr>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName)
+                            @Html.TextBoxFor(m => m.FirstName,new { Value = ViewBag.project_Details.FirstName , @class = "form-control", @placeholder = ViewBag.project_Details.FirstName ,  disabled = "disabled"})
+                            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName)
+                            @Html.TextBoxFor(m => m.LastName,"",new { @class = "form-control", @placeholder = ViewBag.project_Details.LastName })
+                            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ProjectName)
+                            @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", @placeholder = ViewBag.project_Details.ProjectName })
+                            @Html.ValidationMessageFor(m => m.ProjectName, "", new { @class = "badge badge-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Role)
+                            @Html.TextBoxFor(m => m.Role, new { @class = "form-control", @placeholder = ViewBag.project_Details.Role })
+                            @Html.ValidationMessageFor(m => m.Role, "", new { @class = "badge badge-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Effort)
+                            @Html.TextBoxFor(m => m.Effort, "", new { @class = "form-control", @placeholder = ViewBag.project_Details.Effort })
+                            @Html.ValidationMessageFor(m => m.Effort, "", new { @class = "badge badge-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Sponsor)
+                            @Html.TextBoxFor(m => m.Sponsor, new { @class = "form-control", @placeholder = ViewBag.project_Details.Sponsor })
+                            @Html.ValidationMessageFor(m => m.Sponsor, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Start_date)
+                            @Html.TextBoxFor(m => m.Start_date, new { type = "date" , @class = "form-control", @placeholder = ViewBag.project_Details.Start_date})
+                            @Html.ValidationMessageFor(m => m.Start_date, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.End_Date)
+                            @Html.TextBoxFor(m => m.End_Date, new {type = "date" , @class = "form-control", @placeholder = ViewBag.project_Details.End_Date})
+                            @Html.ValidationMessageFor(m => m.End_Date, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Funds)
+                            @Html.TextBoxFor(m => m.Funds, new { @class = "form-control", @placeholder =ViewBag.project_Details.Sponsor})
+                            @Html.ValidationMessageFor(m => m.Funds, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Status)
+                            @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @placeholder = ViewBag.project_Details.Status })
+                            @Html.ValidationMessageFor(m => m.Status, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.KFS_Account)
+                            @Html.TextBoxFor(m => m.KFS_Account, new { @class = "form-control", @placeholder = ViewBag.project_Details.KFS_Account })
+
+                        </div>
+
+                        </tr>
+                </div>
+                <div class="form-group">
+                        <input class="btn btn-dark" type="submit" value="Update" runat="server" />
+                        </div>
+            </div>
+        }
+
+<a href="@Url.Action("Back","Account")" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

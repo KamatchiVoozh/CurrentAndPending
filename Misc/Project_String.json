@@ -1,0 +1,187 @@
+[
+  {
+    "project_id": 0,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 24,
+    "project_Summary": "LEts see now",
+    "over_Lap": "Okay lte see"
+  },
+  {
+    "project_id": 26,
+    "project_Summary": "Summary",
+    "over_Lap": "Overlaps"
+  },
+  {
+    "project_id": 27,
+    "project_Summary": "NASA Harvest",
+    "over_Lap": "None"
+  },
+  {
+    "project_id": 28,
+    "project_Summary": "Summary",
+    "over_Lap": "Overlap"
+  },
+  {
+    "project_id": 29,
+    "project_Summary": "Summary",
+    "over_Lap": "Overlap"
+  },
+  {
+    "project_id": 30,
+    "project_Summary": "Summary",
+    "over_Lap": "OverLap"
+  },
+  {
+    "project_id": 31,
+    "project_Summary": "This is a NASA project",
+    "over_Lap": "No overlap"
+  },
+  {
+    "project_id": 32,
+    "project_Summary": "Maryland Emergency Department Drug Surveillance",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 33,
+    "project_Summary": "Research Program",
+    "over_Lap": "No overlap"
+  },
+  {
+    "project_id": 34,
+    "project_Summary": "Climate Equity Analysis",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 35,
+    "project_Summary": "High Way",
+    "over_Lap": "No OverLap"
+  },
+  {
+    "project_id": 36,
+    "project_Summary": "Parking Demand",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 37,
+    "project_Summary": "Innovations",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 38,
+    "project_Summary": "Global Burned Area",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 39,
+    "project_Summary": "Firms ",
+    "over_Lap": "No Over Lap"
+  },
+  {
+    "project_id": 40,
+    "project_Summary": "Burned Area",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 41,
+    "project_Summary": "Modis Maintenance",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 42,
+    "project_Summary": "SNPP",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 43,
+    "project_Summary": "Burned Area",
+    "over_Lap": "No Overlap"
+  },
+  {
+    "project_id": 44,
+    "project_Summary": "Active Fire",
+    "over_Lap": "No OverLap"
+  },
+  {
+    "project_id": 45,
+    "project_Summary": "This proposal aims to map hotspots of land cover and land use changes in Ukraine using remote sensing datasets. It focuses on the problem/application instead of techniques.",
+    "over_Lap": "This proposal has minimum overlap with the others."
+  },
+  {
+    "project_id": 46,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 47,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 48,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 49,
+    "project_Summary": "This project aims to improve fairness of prediction results across locations. It will investigate new statistical formulations of spatial fairness and explore new computational algorithms and training strategies to efficiently reduce spatial bias during training.",
+    "over_Lap": "This project has minimum overlap with the others."
+  },
+  {
+    "project_id": 50,
+    "project_Summary": "The goal is to leverage our preliminary published results on spatial-heterogeneity-aware and physics-guided deep learning to improve solution quality for Earth science problems.",
+    "over_Lap": "This proposal addresses focuses on applying our published results for NASA Earth science research. It has minimum overlap with this proposal."
+  },
+  {
+    "project_id": 51,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 52,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 53,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 54,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 55,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 56,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 57,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 58,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 59,
+    "project_Summary": null,
+    "over_Lap": null
+  },
+  {
+    "project_id": 60,
+    "project_Summary": "This project aims to create foundational advancements in AI techniques for climate-smart agriculture to sustainably increase winter wheat production and coherently build resilience to climatic change. Specifically, AI advancements will be inspired by important agricultural use cases, including Nano sensing, genomics, yield prediction, pest and disease monitoring, emission prediction, and disaster monitoring.",
+    "over_Lap": "This project has minimal overlap with other proposals."
+  }
+]

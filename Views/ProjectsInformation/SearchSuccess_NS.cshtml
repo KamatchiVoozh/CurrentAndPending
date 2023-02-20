@@ -1,0 +1,124 @@
+﻿@model Document_Manager_Project.Models.Current_Pending_Nasa
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+    string lastname = ViewBag.lastname_save;
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        width: auto;
+        color: white;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #141414;
+        color: white;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #3d3d3d;
+        color: white;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .error {
+        color: red;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+
+
+@if (ViewBag.EffortError != null){
+    <p class="error">
+        The Effort is greater than 12 months please check!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    </p>
+}
+
+@{
+    Html.BeginForm("Export_NS", "Miscelleneous", FormMethod.Post);
+            {
+                <input type="hidden" name="GridHtml" />
+                 <input type="submit" value="Generate PDF Document" class="btn btn-warning" id="1" />
+           
+            }
+            Html.EndForm();
+        }
+
+<div id="Grid">
+   
+    <table class="center" font-family="arial, sans-serif" width="80%" style="margin-right:auto" border="1">
+
+        <tr>
+            <th>
+                The following information should be provided for each investigator and other senior personnel.  Failure to provide this information may delay consideration of this proposal.
+            </th>
+        </tr>
+        <tr>
+            <td>
+            Other agencies (including NASA) to which this proposal has been/will be submitted.
+            </td>
+        </tr>
+        <tr>
+            @foreach (var item in ViewBag.project_Details)
+            {
+                <td>  Investigator : @item.FirstName @item.LastName  </td>
+                break;
+             }
+        </tr>
+
+        @foreach (var item in ViewBag.project_Details)
+    {
+            <tr>
+                <td>
+            @if (@item.Status.Contains("0"))
+            {
+                <p> Support: Current : YES  |  Pending: NO </p>
+            }
+            else
+            {
+                <p>  Support: Current : NO  |  Pending: YES </p>    
+            }
+            <p> Project / Proposal Title: @item.Project_Name (@item.PIFirstName @item.PILastName)</p>
+            <p> Grant Number: @item.GrantNo </p>
+            <p> Source of Support: @item.sponsor</p>
+            <p> Primary Place of Performance: @item.primary_place_performance </p>
+            <p> Total Award Period Covered: @item.Start_date.ToString("MM/dd/yyyy") - @item.End_Date.ToString("MM/dd/yyyy") </p>
+            <p> Total Award: @item.funds </p>
+            <p> Effort of Personnel: @item.Effort </p>
+            <p> Overall Objectives: @item.overallObj </p>
+            <p> Statement of Potential Overlap: @item.Statement_of_Overlap</p>
+            </td>
+        </tr>
+
+    }
+ </table>
+ </div>
+<a href="javascript:history.go(-1)" class="btn btn-warning">Back</a>
+<br />

@@ -1,0 +1,152 @@
+﻿@model Document_Manager_Project.Models.User_Details
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Welcome Page";
+}
+<style>
+
+    .main {
+        height: 125vh;
+        background: #141414;
+        width: 100%;
+        padding-left: 35px;
+        display: flex;
+    }
+
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 9%;
+        position: relative;
+    }
+
+    .text-info {
+        text-align: center;
+        margin-top: 70px;
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 90%;
+        max-width: 60%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 50px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-input {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+
+
+    @if (@Accessor.HttpContext.Session.GetString("FirstName") != null)
+
+    {
+        <h2 class="text-info">
+            Welcome @Accessor.HttpContext.Session.GetString("FirstName"), to the Geographical Sciences Department.
+        </h2>
+        
+    }
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 custom-centering">
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <p>View & Edit existing records!</p>
+                    <form enctype="multipart/form-data" method="get" asp-controller="ProjectsInformation" asp-action="Search" runat="server">
+                        <input class="btn btn-warning" type="submit" value="Search" runat="server" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 custom-centering">
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <p>Add new proposals!</p>
+                    <form enctype="multipart/form-data" method="get" asp-controller="ProjectsInformation" asp-action="Add" runat="server">
+                        <input class="btn btn-warning" type="submit" value="Add" runat="server" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 custom-centering">
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <p>View Current and Pending - NASA</p>
+                    <form enctype="multipart/form-data" method="get" asp-controller="ProjectsInformation" asp-action="C_N_P_NA" runat="server">
+                        <input class="btn btn-warning" type="submit" value="C&P NASA" runat="server" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 custom-centering">
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <p>View Current and Pending - NSF</p>
+                    <form enctype="multipart/form-data" method="get" asp-controller="ProjectsInformation" asp-action="C_N_P_NS" runat="server">
+                        <input class="btn btn-warning" type="submit" value="C&P NSF" runat="server" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 custom-centering">
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <p>View Current and Pending - NIH</p>
+                    <form enctype="multipart/form-data" method="get" asp-controller="ProjectsInformation" asp-action="C_N_P_NIH" runat="server">
+                        <input class="btn btn-warning" type="submit" value="C&P NIH" runat="server" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 custom-centering">
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <p>View Current and Pending - DOD</p>
+                    <form enctype="multipart/form-data" method="get" asp-controller="ProjectsInformation" asp-action="C_N_P_DOD" runat="server">
+                        <input class="btn btn-warning" type="submit" value="C&P DOD" runat="server" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<div>@ViewBag.Message</div>

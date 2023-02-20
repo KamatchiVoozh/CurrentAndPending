@@ -1,0 +1,135 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Document_Manager_Project.Models.Full_Project_Details
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        margin-top: 70px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+        color: white;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #3d3d3d;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #141414;
+    }
+</style>
+
+
+<table class="center" font-family="arial, sans-serif" width="80%" style="margin-right:auto" border="1">
+
+    <tr>
+        <td>
+            Project Title: @ViewBag.Full_project.ProjectName
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Project Short Title: @ViewBag.Full_project.projectShortName
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Project Grant No : @ViewBag.Full_project.GrantNo
+        </td>
+    </tr>
+    <tr>
+        <td>
+            PI First Name : @ViewBag.Full_project.FirstName
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            PI Last Name: @ViewBag.Full_project.LastName
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Sponsor : @ViewBag.Full_project.Sponsor
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Project Status: @ViewBag.Full_project.Status
+        </td>
+    </tr>
+    <tr>
+        <td>
+            KFS Account: @ViewBag.Full_project.KFS_Account
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Project Funding: @ViewBag.Full_project.Funds
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Project Start Date: @ViewBag.Full_project.Start_date.ToString("MM/dd/yyyy")
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Project End Date: @ViewBag.Full_project.End_Date.ToString("MM/dd/yyyy")
+        </td>
+    </tr>
+
+    @{
+        var i = 0;
+    }
+    @foreach (var item in ViewBag.Full_project.Collaborators_Details)
+    {
+        i = i + 1;
+        <tr>
+            <td>
+                Personnel @i First Name: @item.FirstName
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Personnel @i Last Name: @item.LastName
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Personnel @i Role: @item.Role
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Personnel @i Effort: @item.Effort
+            </td>
+        </tr>
+    }
+
+
+</table>
+
+
+<a href="javascript:history.go(-1)" class="btn btn-warning center">Back</a>
+<br />
+<div>@ViewBag.Message</div>

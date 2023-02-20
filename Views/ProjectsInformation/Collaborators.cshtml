@@ -1,0 +1,170 @@
+﻿@model Document_Manager_Project.Models.Researcher_Collaborator_Table
+
+@{
+    ViewData["Title"] = "Add Collaborators";
+}
+
+@{
+    TempData["ProjectID"] = ViewBag.ProjectID;
+}
+
+<style>
+
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 20%;
+        position: relative;
+    }
+
+    .text-info {
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 80%;
+        max-width: 80%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-label {
+        color: white
+    }
+
+    .custom-input {
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+
+ <div class="col-md-5">
+        @using (Html.BeginForm("Collaborators", "ProjectsInformation", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-centering">
+                <div class="custom-card">
+                    <div class="custom-card-header">Add Collaborators Information</div>
+                    <div>
+                        @Html.Label("First Name")<br />
+                    @Html.TextBoxFor(m => m.FirstName, new {@class = "custom-input", @placeholder = "First Name", id = "Fname"})
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Last Name")<br />
+                    @Html.TextBoxFor(m => m.LastName,new {@class = "custom-input", @placeholder = "Last Name", id ="Lname"  })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        <input type="button" class="btn btn-danger" value="Check researcher" onclick="CheckAvailability()" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <span id="message"> </span>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("UID") <br />
+                        @Html.TextBoxFor(m => m.UID,new { @class = "custom-input", @placeholder = "UID" })
+                        @Html.ValidationMessageFor(m => m.UID, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Email")  <br />
+                        @Html.TextBoxFor(m => m.Email, new { @class = "custom-input", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Effort")  <br />
+                        @Html.TextBoxFor(m => m.Effort, new { @class = "custom-input", @placeholder = "Effort" })
+                        @Html.ValidationMessageFor(m => m.Effort, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Role")   <br />
+                        @Html.TextBoxFor(m => m.Role, new {@class = "custom-input", @placeholder = "Role " })
+                        @Html.ValidationMessageFor(m => m.Role, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Senior/Other")   <br />
+                        @Html.TextBoxFor(m => m.Personnel, new { @class = "custom-input", @placeholder = "Personnel" })
+                        @Html.ValidationMessageFor(m => m.Personnel, "", new { @class = "badge badge-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" name="collaborators" class="btn btn-danger" value="Add more Collaborators" asp-controller="ProjectsInformation" asp-action="Collaborators" />
+                     </div>
+                     <div class="form-group">
+                        <input type="submit" name="Save" class="btn btn-danger" value="Finish" asp-controller="ProjectsInformation" asp-action="CollaboratorsSave" />
+                     </div>
+                
+                </div>
+
+            </div>
+
+        }
+</div>
+
+
+
+@section Scripts
+    {
+    <script>
+
+        function CheckAvailability() {
+            var Fname = $("#Fname").val();
+            var Lname = $("#Lname").val();
+            $.ajax({
+                type: "POST",
+                url: "/ProjectsInformation/CheckResearcher",
+                data: {
+                    Fname: Fname,
+                    Lname: Lname
+                },
+                success: function (response) {
+                    var message = $("#message");
+                    if (response) {
+                        //Email available.
+                        message.css("color", "green");
+                        message.html("Researcher Present so please skip the UID and Email and proceed");
+                    }
+                    else {
+                        //Email not available.
+                        message.css("color", "red");
+                        message.html("Researcher Not Present so please enter the UID and Email to add them");
+                    }
+
+                }
+            });
+        };
+
+
+    </script>
+}

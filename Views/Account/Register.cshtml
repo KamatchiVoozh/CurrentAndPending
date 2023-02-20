@@ -1,0 +1,138 @@
+﻿@using Document_Manager_Project.Models
+@model Document_Manager_Project.Models.User_Details
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 20%;
+        position: relative;
+    }
+
+    .text-info {
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 80%;
+        max-width: 80%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-label {
+        color: white
+    }
+
+    .custom-input {
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+            {
+                Text = "Researcher",
+                Value = "Researcher",
+                Selected = true
+            });
+    listItems.Add(new SelectListItem
+            {
+                Text = "Team_Member",
+                Value = "Team_Member"
+
+            });
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-centering">
+                <div class="custom-card">
+                    <div class="custom-card-header">User Information</div>
+                    <br />
+                    <br />
+
+
+
+                    <div class="form-group">
+                        @Html.Label("First Name")<br/>
+                        @Html.TextBoxFor(m => m.FirstName, "", new { @class = "custom-input", @placeholder = "First Name" })
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Last Name")<br />
+                        @Html.TextBoxFor(m => m.LastName, "", new { @class = "custom-input", @placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Email")<br/>
+                        @Html.TextBoxFor(m => m.Email, "", new { @class = "custom-input", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                        @if (ViewBag.error != null)
+                        {
+                            <span class="badge badge-danger">@ViewBag.error</span>
+                        }
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Password")<br />
+                        @Html.PasswordFor(m => m.Password, new { @class = "custom-input", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Confirm Pasword")<br />
+                        @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "custom-input", @placeholder = "Confim Password" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Approval Type")<br />
+                        @Html.DropDownListFor(m => m.Approval_Type,listItems,new { @class = "custom-input", @placeholder = "Approval Access" })
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-warning" value="Register" />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

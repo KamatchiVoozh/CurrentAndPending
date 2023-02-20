@@ -1,0 +1,166 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Document_Manager_Project.Models.Researcher_Collaborator_Table
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        margin-top: 70px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+        color: white;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #3d3d3d;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #141414;
+    }
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 20%;
+        position: relative;
+    }
+
+    .text-info {
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 80%;
+        max-width: 80%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-label {
+        color: white
+    }
+
+    .custom-input {
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+
+@{
+    var Full_Name = @Accessor.HttpContext.Session.GetString("FullName");
+    TempData["ProjectID"] = ViewBag.Project_ID;
+   // ViewBag.Collaborators = ViewBag.Collab;
+    // var Firstname;
+    // {
+   // TempData["CollabDetails"] = ViewBag.Full_project;
+   // }
+}
+
+<div class="row justify-content-md-center">
+    @using (Html.BeginForm("Collab_edit", "Manage", FormMethod.Post))
+        {
+        @Html.AntiForgeryToken()
+
+        var i = 0;
+        string[] FirstName = new string[100] ;
+        @if (ViewBag.Collab.Count != 0)
+        {
+        <table class="center" font-family="arial, sans-serif" width="80%" style="margin-right:auto" border="1">
+           
+        @foreach (var item in ViewBag.Collab)
+        {
+            i = i + 1;
+        <tr>
+            <td>
+                
+                Personnel @i First Name: <input type="text" name="FirstName[]" class="custom-input" placeholder=@item.FirstName />
+                            
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Personnel @i Last Name: <input type="text" name="LastName[]" class="custom-input" placeholder=@item.LastName />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                            Personnel @i Role: <input type="text" name="Role[]" class="custom-input" placeholder=@item.Role/>
+            </td>
+        </tr>
+                <tr>
+            <td>
+                            Personnel @i Effort: <input type="text" name="Effort[]" class="custom-input" placeholder=@item.Effort value=@item.Effort />
+            </td>
+        </tr>
+                    <tr>
+                        <td>
+                        <input type="hidden" name="Id[]" class="custom-input" placeholder=@item.researcher_id value=@item.researcher_id />
+                        </td>
+        </tr>
+        }
+            </table>
+            <td>
+                <div class="form-group">
+                    <input type="submit" name="Collaborators" class="btn btn-warning" value="Save"/>
+                </div>
+            </td>
+        }
+        else
+        {
+            <p class="center">PI is the only Researcher in this Project so please add new collaborators if required</p>
+        }
+
+    <div class="form-group">
+            <input type="submit" name="Collaborators" class="btn btn-warning" value="Add Collaborators" asp-controller="Manage" asp-action="Add_Collab_edit" asp-route-id=@ViewBag.ProjectID />
+    </div>
+    }
+</div>
+
+
+<a href="javascript:history.go(-2)" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

@@ -1,0 +1,241 @@
+﻿@model Document_Manager_Project.Models.Project_Details_Table
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+
+<style>
+
+    .custom-centering {
+        text-align: center;
+        margin-top: 70px;
+        left: 20%;
+        position: relative;
+    }
+
+    .text-info {
+        color: white;
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    .custom-card {
+        background: #3d3d3d;
+        max-height: 80%;
+        max-width: 80%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .custon-card-body {
+        background: #4d4d4d;
+    }
+
+    .custom-card-header {
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .custom-label{
+        color:white
+    }
+    .custom-input {
+
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 12px 36px;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+@{
+    List<SelectListItem> Full_Name = new List<SelectListItem>();
+    @foreach (var item in ViewBag.PIProjectDetails)
+    {
+        Full_Name.Add(new SelectListItem
+                {
+                    Text = @item.FirstName.Trim() + " " +item.LastName.Trim(),
+                    Value = @item.FirstName.Trim() + " " +item.LastName.Trim(),
+                    Selected = false
+                });
+    }
+}
+
+@{
+    List<SelectListItem> status = new List<SelectListItem>();
+    status.Add(new SelectListItem
+        {
+            Text = "Pending",
+            Value = "Pending",
+            Selected = false
+        });
+    status.Add(new SelectListItem
+        {
+            Text = "Current",
+            Value = "Current",
+            Selected = false
+        });
+}
+
+@{
+    List<SelectListItem> Inkind = new List<SelectListItem>();
+    Inkind.Add(new SelectListItem
+            {
+                Text = "No",
+                Value = "No",
+                Selected = false
+            });
+    Inkind.Add(new SelectListItem
+            {
+                Text = "Yes",
+                Value = "Yes",
+                Selected = false
+            });
+}
+
+<div class="card-body">
+    @if (@Accessor.HttpContext.Session.GetString("FullName") != null)
+
+    {
+        <p>Name:  @Accessor.HttpContext.Session.GetString("FullName") </p>
+
+    }
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        @using (Html.BeginForm("Add", "ProjectsInformation", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-centering">
+                <div class="custom-card">
+                    <div class="custom-card-header">Add Project Information</div>
+                    <br />
+                    <br />
+
+              @*      @if (@Accessor.HttpContext.Session.GetString("Researcher") != null)
+                    {
+                        <div class="form-group">
+                          
+                            @Html.TextBox("FirstName" ,null, new {@class = "form-control", @placeholder = @Accessor.HttpContext.Session.GetString("FirstName"), @disabled = "true"})
+                            @{
+                                TempData["FirstName"] = @Accessor.HttpContext.Session.GetString("FirstName");
+                            }
+                        </div>
+                        <div class="form-group">
+                           
+                            @Html.TextBox("LastName" , null,new {@class = "form-control", @placeholder = @Accessor.HttpContext.Session.GetString("LastName"), @disabled = "true"})
+                            @{
+                                TempData["LastName"] = @Accessor.HttpContext.Session.GetString("LastName");
+                            }
+                        </div>
+                    }
+                    else{*@
+                       
+                    @*}*@
+
+
+                    <div class="form-group">
+                        @Html.Label("Proposal Name  ")<br />
+                        @Html.TextBoxFor(m => m.ProjectName, new {@class = "custom-input", @placeholder = "Project Name" })
+                        @Html.ValidationMessageFor(m => m.ProjectName, "", new { @class = "badge badge-danger" })
+                    </div>
+                     <div class="form-group">
+                        @Html.Label("PI Name   ")<br />
+                        @Html.DropDownList("PI_Full_Name", Full_Name ,new { @class = "custom-input", @placeholder = "Full Name" })
+                        @* @Html.ValidationMessage("PI_Full_Name", "Please Select Full Name of PI", new { @class = "badge badge-danger" })*@
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("PI Effort   ")<br />
+                        @Html.TextBox("PI_Effort" ,"", new { @class = "custom-input", @placeholder = "PI Effort" })
+                      @*  @Html.ValidationMessage("PI_EFfort", "Please add effort of PI", new { @class = "badge badge-danger" })*@
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Proposal Short Name   ")<br />
+                        @Html.TextBoxFor(m => m.ProjectShortName, new { @class = "custom-input", @placeholder = "Project Short Name" })
+                        @Html.ValidationMessageFor(m => m.ProjectShortName, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Grant Number   ")<br />
+                        @Html.TextBoxFor(m => m.GrantNo, new { @class = "custom-input", @placeholder = "Grant Number" })
+                        @Html.ValidationMessageFor(m => m.GrantNo, "", new { @class = "badge badge-danger" })
+                    </div>
+                     <div class="form-group">
+                        @Html.Label("Status   ")<br />
+                        @Html.TextBoxFor(m => m.ProjectStatus, new { @class = "custom-input", @placeholder = "Project Status" })
+                        @Html.ValidationMessageFor(m => m.ProjectStatus, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Sponsor   ")<br />
+                        @Html.TextBoxFor(m => m.Sponsor, new { @class = "custom-input", @placeholder = "Sponsor Name" })
+                        @Html.ValidationMessageFor(m => m.Sponsor, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Start Date  ")<br />
+                        @Html.TextBoxFor(m => m.Start_date, new { type="date" , @class = "custom-input", @placeholder = "Project Start Date (MM/dd/yyyy)"})
+                        @Html.ValidationMessageFor(m => m.Start_date, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("End Date  ")<br />
+                        @Html.TextBoxFor(m => m.End_Date, new {type="date", @class = "custom-input", @placeholder = "Project End Date (MM/dd/yyyy)" })
+                        @Html.ValidationMessageFor(m => m.End_Date, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Funds  ")<br />
+                        @Html.TextBoxFor(m => m.Funds, new { @class = "custom-input",@placeholder = "Funding" })
+                        @Html.ValidationMessageFor(m => m.Funds, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Place of Performance  ")<br />
+                        @Html.TextBoxFor(m => m.PlaceOfPerformance, new { @class = "custom-input", @placeholder = "Place of Performance" })
+                        @Html.ValidationMessageFor(m => m.PlaceOfPerformance, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("KFS Account  ")<br />
+                        @Html.TextBoxFor(m => m.KFS_Account, new { @class = "custom-input", @placeholder = "KFS Account" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Prpject Summary  ")<br />
+                        @Html.TextArea("Project_Summary",  new { @class = "custom-input", @placeholder = "Project Summary" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Statement of Overlap  ")<br />
+                        @Html.TextArea("Over_Lap",  new { @class = "custom-input", @placeholder = "Statement of OverLap" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Is InKind   ")<br />
+                        @Html.DropDownList("InKind", Inkind ,new { @class = "custom-input", @placeholder = "Full Name" })
+                        @* @Html.ValidationMessage("PI_Full_Name", "Please Select Full Name of PI", new { @class = "badge badge-danger" })*@
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-warning" value="Collaborators" />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+
+
+<a href="@Url.Action("Back","Account")" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

@@ -1,0 +1,132 @@
+﻿@model Document_Manager_Project.Models.Over_Lap
+@using Document_Manager_Project.Models
+
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+    int i = 0;
+}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #141414;
+        color: white;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #3d3d3d;
+        color: white;
+    }
+</style>
+
+<h2>
+    Welcome to the Geographical Sciences Department
+</h2>
+
+<p>
+    We focus on Research Projects
+</p>
+<ul>
+    <li>On place to store all our proposals </li>
+    <li>
+        It's all about your Projects
+    </li>
+    <li>
+        We listen to you. When you call us we'll answer and take the time that we need with
+        you.
+    </li>
+    <li>
+        We're real. 
+    </li>
+</ul>
+
+<div>
+    <table class="center" font-family="arial, sans-serif" width="80%" style="margin-right:auto" border="1">
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Approval Type
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Approve
+            </th>
+            <th>
+                Reject
+            </th>
+        </tr>
+       @foreach (var item in ViewBag.Approval_Details)
+       {
+            Approval_Details[] _Approval_Details = new Approval_Details[10];
+            i = i + 1;
+
+            <tr>
+                <td>
+                    @item.FirstName
+                </td>
+
+                <td>
+                    @item.LastName
+                </td>
+                <td>
+                    @item.Approval_Type
+                </td>
+                <td>
+                    @item.Email
+                    @{
+                        TempData[@item.Email] = JsonConvert.SerializeObject(@item.Email);
+                    }
+                </td>
+          
+                    <td>
+                        <div class="Approve">
+                          
+                             <form enctype="multipart/form-data" method="post" asp-controller="Approvals" asp-action="Approve" runat="server" id=@i>
+                                <dl>
+                                <input class="btn btn-warning" type="submit" value="Approve" runat="server" name= @i/>
+                            </form>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="Remove">
+                        <form enctype="multipart/form-data" method="post" asp-controller="Approvals" asp-action="Reject" runat="server" id=@i>
+                                <dl>
+                                    <input class="btn btn-warning" type="submit" value="Reject" runat="server" name= @i />
+                            </form>
+                        </div>
+                    </td>
+               
+             </tr>
+
+
+        }
+        </table>
+</div>
+<a href="javascript:history.go(-1)" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

@@ -1,0 +1,221 @@
+﻿@model Document_Manager_Project.Models.Project_Details
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        width: auto;
+        color: white;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #141414;
+        color: white;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #3d3d3d;
+        color: white;
+    }
+
+    tr:nth-child(10) {
+       
+        border: solid thin;
+        color: white;
+    }
+
+    .Set_Border{
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+    .error {
+        color: red;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+
+
+@if (ViewBag.EffortError != null){
+    <p class="error">
+        The Effort is greater than 12 months please check!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    </p>
+}
+
+
+<div id="Grid">
+   
+    <table class="center" font-family="arial, sans-serif" width="100%" style="margin-right:auto" border="1">
+
+        <tr>
+            <th class="text-center">
+                PHS OTHER SUPPORT
+                For All Application Types – DO NOT SUBMIT UNLESS REQUESTED
+            </th>
+        </tr>
+     
+        <tr>
+            @foreach (var item in ViewBag.project_Details)
+            {
+                <td>  Name of Individual : @item.FirstName @item.LastName  </td>
+                break;
+             }
+        </tr>
+        <tr>
+            <td class="text-center">
+                Other Support – Project/Proposal
+            </td>
+        </tr>
+        @foreach (var item in ViewBag.project_Details)
+    {
+            if (@item.inkind.Contains("No"))
+            {
+                <tr>
+                <td>
+
+                   <p>Project / Proposal Title: @item.Project_Name  </p>
+                   <p>Major Goals:@item.overallObj</p>
+                   <p>   Role:@item.Role </p>
+                    @if (@item.Status.Contains("Current"))
+                    {
+
+                                <p> Status of Support: Current  </p>
+
+                    }else{
+                           <p>Status of Support: Pending </p>
+                    }
+                          <p>Project Number:@item.GrantNo</p>
+                          <p>  Name of PD/PI:  @item.PIFirstName @item.PILastName</p>
+                          <p>  Source of Support: @item.sponsor </p>
+                          <p>Primary Place of Performance: @item.primary_place_performance</p>
+                          <p> Project/Proposal Start and End Date: @item.Start_date.ToString("MM/dd/yyyy") - @item.End_Date.ToString("MM/dd/yyyy") </p>
+                          <p>Total Award Amount : @item.funds</p>
+                          <p> Person Months (Calendar/Academic/Summer) per budget period :
+                           <table class="center" font-family="arial, sans-serif" width="45%" style="height: 1px" border="1">
+                                                                    <tr>
+                                                                        <th>
+                                                                            Year(YYYY)         
+                                                                        </th>
+                                                                        <th>
+                                                                            Person Months (##.##)       
+                                                                        </th>
+                                                                    </tr>
+                                                                    @for (int i = @item.start_year; i <= @item.end_year; i++)
+                                                                    {
+                                                                     <tr>
+                                                                            <td>@i</td>
+                                                                            <td>@item.Effort</td>
+                                                                     </tr>   
+                                                                    }
+                           </table> 
+                           </p>
+                   </td>
+                </tr>
+            }
+        }
+        @foreach (var item in ViewBag.project_Details)
+        {
+            if (@item.inkind.Contains("Yes"))
+            {
+            <tr>
+                <td class="text-center">
+                    In Kind
+                </td>
+                <tr>
+                    <td>
+                        <p>   Summary of In-Kind Contribution: @item.overallObj</p>
+                    <p>Primary Place of Performance: @item.primary_place_performance</p>
+                    <p> Project/Proposal Start and End Date: @item.Start_date.ToString("MM/dd/yyyy") - @item.End_Date.ToString("MM/dd/yyyy") </p>
+
+                    <p>
+                        Person Months (Calendar/Academic/Summer) per budget period :
+                        <table class="center" font-family="arial, sans-serif" width="45%" style="height: 1px" border="1">
+                            <tr>
+                                <th>
+                                    Year(YYYY)
+                                </th>
+                                <th>
+                                    Person Months (##.##)
+                                </th>
+                            </tr>
+                            @for (int i = @item.start_year; i <= @item.end_year; i++)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.Effort</td>
+                                </tr>
+                            }
+                        </table>
+                    </p>
+                        <p>Estimated Dollar Value of In-Kind Information: @item.funds</p>
+                        <p>Overlap (summarized for each individual):  @item.Statement_of_Overlap</p>
+                    </td>
+                 </tr>
+            </tr>
+                
+            }
+        }
+ </table>
+ <br />
+ <br />
+ <p></p>
+  <p class="text-white">  I, PD/PI or other senior/key personnel, certify that the statements herein are true, complete and accurate to the best of my knowledge, and accept the obligation to comply with Public Health Services terms and conditions if a grant is awarded as a result of this application. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties.
+      
+
+</p>
+    <p class="text-white">
+    Signature:__________________________________________________________
+             </p>
+    <p class="text-white">
+
+             Date     :_______________________________________________
+
+    </p>
+
+ </div>
+        @{
+            Html.BeginForm("Export", "Miscelleneous", FormMethod.Post);
+            {
+                <input type="hidden" name="GridHtml" />
+                 <input type="submit" value="Generate PDF Document" class="btn btn-warning" id="btnSubmit" />
+           
+            }
+            Html.EndForm();
+        }
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#Grid").html());
+            });
+        });
+    </script>
+
+
+<a href="javascript:history.go(-1)" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

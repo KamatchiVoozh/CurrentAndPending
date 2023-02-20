@@ -1,0 +1,141 @@
+﻿@model Document_Manager_Project.Models.Project_Details
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        width: auto;
+        color: white;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #141414;
+        color: white;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #3d3d3d;
+        color: white;
+    }
+
+    tr:nth-child(10) {
+       
+        border: solid thin;
+        color: white;
+    }
+
+    .Set_Border{
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+    .error {
+        color: red;
+    }
+
+    .btn-warning {
+        background-color: #ffd200;
+        color: black;
+        font-weight: 600;
+    }
+</style>
+
+
+@if (ViewBag.EffortError != null){
+    <p class="error">
+        The Effort is greater than 12 months please check!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    </p>
+}
+
+
+<div id="Grid">
+   
+    <table class="center" font-family="arial, sans-serif" width="100%" style="margin-right:auto" border="1">
+
+        <tr>
+            <th>
+                The following information should be provided for each investigator and other senior personnel.  Failure to provide this information may delay consideration of this proposal.
+            </th>
+        </tr>
+     
+        <tr>
+            <td>
+            Other agencies (including NASA) to which this proposal has been/will be submitted.
+            </td>
+        </tr>
+        <tr>
+            @foreach (var item in ViewBag.project_Details)
+            {
+                <td>  Investigator : @item.FirstName @item.LastName  </td>
+                break;
+             }
+        </tr>
+        
+        @foreach (var item in ViewBag.project_Details)
+    {
+            <tr>
+                <td>
+
+            @if (@item.Status.Contains("Current"))
+            {
+
+                       <p> Support: Current : YES </p>
+
+            }else{
+                        <p>Support: Pending: YES </p>
+            }
+
+            <p>Project / Proposal Title: @item.Project_Name ( PI: @item.PIFirstName @item.PILastName) </p>
+             <p>   Role:@item.Role </p>
+  
+                  <p>  Source of Support: @item.sponsor </p>
+
+                  <p> Total Award Period Covered: @item.Start_date.ToString("MM/dd/yyyy") - @item.End_Date.ToString("MM/dd/yyyy") </p>
+
+                  <p> Effort of Personnel: @item.Effort </p>
+             </td>
+            </tr>
+    }
+ </table>
+ </div>
+        @{
+            Html.BeginForm("Export", "Miscelleneous", FormMethod.Post);
+            {
+                <input type="hidden" name="GridHtml" />
+                 <input type="submit" value="Generate PDF Document" class="btn btn-warning" id="btnSubmit" />
+           
+            }
+            Html.EndForm();
+        }
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#Grid").html());
+            });
+        });
+    </script>
+
+
+<a href="javascript:history.go(-1)" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

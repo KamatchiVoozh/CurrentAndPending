@@ -1,0 +1,109 @@
+﻿@using Document_Manager_Project.Models
+@using Microsoft.AspNetCore.Http
+@model Document_Manager_Project.Models.Project_Details
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Project View Page";
+}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<h2>
+    Welcome to the Geographical Sciences Department
+</h2>
+
+<p>
+    We focus on Research Projects
+</p>
+<ul>
+    <li>On place to store all our proposals </li>
+    <li>
+        It's all about your Projects
+    </li>
+    <li>
+        We listen to you. When you call us we'll answer and take the time that we need with
+        you.
+    </li>
+    <li>
+        We're real. 
+    </li>
+</ul>
+
+<div>
+    <table class="centre" font-family="arial, sans-serif" width="80%" style="margin-right:auto" border="1">
+        <tr>
+            <th>
+                Project Name
+            </th>
+            <th>
+                PI First Name
+            </th>
+            <th>
+                PI Last Name
+            </th>
+            <th>
+                Sponsor
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+        @foreach (var item in ViewBag.project_Details)
+        {
+            <tr>
+                <td>
+                    @item.ProjectName
+                </td>
+
+                <td>
+                    @item.FirstName
+
+                </td>
+                <td>
+                    @item.LastName
+                </td>
+                <td>
+                    @item.Sponsor
+                </td>
+                <td>
+                    <div class="Edit">
+
+                        <form enctype="multipart/form-data" method="get" asp-controller="Manage" asp-action="Update" runat="server" asp-route-id="@item.Project_Id">
+                            <dl>
+                                <input class="btn btn-dark" type="submit" value="Update" runat="server" />
+                        </form>
+                    </div>
+                </td>
+              
+            </tr>
+
+
+        }
+    </table>
+</div>
+<a href="@Url.Action("Back","Account")" class="btn btn-warning">Back</a>
+<br />
+<div>@ViewBag.Message</div>

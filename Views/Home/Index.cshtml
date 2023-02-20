@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    .homepage-header {
+        background: -webkit-linear-gradient(#333333, #dd1818); /* Chrome 10-25, Safari 5.1-6 */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .custom-center{
+        text-align: center;
+        margin-top: 150px;
+    }
+
+    .homepage-sidepanel{
+        background: #3d3d3d;
+        border-radius: 10px;
+        max-height: 100%;
+        max-width: 100%;
+        box-shadow: 0 0 30px 45px rgba(0,0,0,0.1);
+    }
+
+    .Login{
+        margin: 20px;
+    }
+
+    .Register {
+        margin: 20px;
+    }
+</style>
+
+<div class="container" style="margin-top: 40px;">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 homepage-sidepanel">
+            <div class="custom-center">
+                <div class="Login">
+                    <form enctype="multipart/form-data" method="get" asp-controller="Account" asp-action="Login" runat="server">
+                        <input class="btn btn-dark btn-lg" type="submit" value="Login" runat="server" />
+                    </form>
+                </div>
+                <div class="Register">
+                    <form enctype="multipart/form-data" method="get" asp-controller="Account" asp-action="Register" runat="server">
+                        <input class="btn btn-dark btn-lg" type="submit" value="Register" runat="server" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<br />
+<div>@ViewBag.Message</div>
